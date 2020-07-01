@@ -29,11 +29,44 @@ describe('maybe', () => {
       .getOrElse('Hello, guest');
     expect(none).toBe('Hello, guest');
   });
+
   it('binds Some', () => {
     const name = (n: string | null) => n;
     const some = maybe(name('Prem'))
       .flatMap((e) => maybe(`Hello, ${e}`))
       .getOrElse('Hello, guest');
     expect(some).toBe('Hello, Prem');
+  });
+
+  it('binds Some, but not None', () => {
+    class User {
+      constructor(private readonly userId: number, private readonly name: string) {}
+
+      getName() {
+        return this.name;
+      }
+    }
+
+    const getUser = (userId: number): User | null => {
+      switch (userId) {
+        case 1:
+          return new User(1, 'Prem');
+        case 2:
+          return new User(2, 'Emily');
+        default:
+          return null;
+      }
+    };
+
+    const getName = (user: User) => user.getName();
+    const greetName = (name: string) => `Hello, ${name}`;
+
+    const greetUser = (userId: number) => {
+      return maybe(getUser(userId)).map(getName).map(greetName).getOrElse(greetName('guest'));
+    };
+
+    expect(greetUser(1)).toBe('Hello, Prem');
+    expect(greetUser(2)).toBe('Hello, Emily');
+    expect(greetUser(3)).toBe('Hello, guest');
   });
 });

@@ -3,11 +3,11 @@ import { Monad } from './monad';
 abstract class Maybe<T> implements Monad<T> {
   protected isDefined?: boolean;
 
-  static maybe<T>(t?: T): Maybe<T> {
+  static maybe<T>(t?: T | null): Maybe<T> {
     if (t !== null && t !== undefined) {
       return new Some(t);
     } else {
-      return new None<T>();
+      return new None();
     }
   }
 
@@ -17,7 +17,7 @@ abstract class Maybe<T> implements Monad<T> {
     if (this.isDefined) {
       return f(this.get());
     } else {
-      return new None<R>();
+      return new None();
     }
   }
 
@@ -60,11 +60,11 @@ class None<T> extends Maybe<T> {
   }
 
   flatMap<R>(f: (_: T) => Maybe<R>): Maybe<R> {
-    return new None<R>();
+    return new None();
   }
 
   map<R>(f: (_: T) => R): Maybe<R> {
-    return new None<R>();
+    return new None();
   }
 
   get(): never {
