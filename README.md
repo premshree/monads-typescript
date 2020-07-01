@@ -54,12 +54,51 @@ const greetUser = (userId: number) => {
 };
 ``` 
 
-As you can see, using the `Maybe` monad abstracts away a lot of boilerplate giving you a flat, composable
+As you can see, using the `Maybe` monad abstracts away a lot of boilerplate, giving you a flat, composable
 interface to work with that's much more readable.
 
 ### `Either` 
 Similarly, the `Either` monad is based on Scala's
 [`Either`](https://www.scala-lang.org/api/current/scala/util/Either.html) type.
+
+The `Either` monad is useful when you want to represent one of two possible types. An instance of
+`Either` is either a `Left` or `Right`. By convention, `Right` is used to represent a success type, while
+`Left` is used to hold a failure type.
+
+Here's another example of some code you might write in imperative TypeScript:
+
+```ts
+const getAge = (uid: number): number | never => ...;
+const canDrink = (age: number): boolean => age >= 18;
+
+const okToDrink = (uid: number) => {
+  try {
+    const age = getAge(uid);
+    if (age) {
+      return canDrink(age);
+    } 
+  } catch {
+    return false;
+  }
+} 
+```
+
+Rewriting this using the `Either` monad:
+
+```ts
+const getAge = (uid: number): Either<string, number> => ...; // the left represents an error string
+const canDrink = (age: number): boolean => age >= 18;
+
+const okToDrink = (uid: number) => {
+  getAge(uid).fold(
+    (error) => {
+      console.log(`Error getting age: ${error}`);
+      return false;
+    },
+    (age) => canDrink(age)
+  )
+}
+```
 
 ### Resources
 - [Demystifying the Monad in Scala, Sinisa Louc](https://medium.com/free-code-camp/demystifying-the-monad-in-scala-cc716bb6f534), a well-written, technical, yet approachable explanation of monads in Scala.

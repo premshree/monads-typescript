@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { Monad } from './monad';
 
 abstract class Either<L, R> implements Monad<R> {
