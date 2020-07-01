@@ -1,4 +1,4 @@
-# monad.ts
+# monads-typescript
 
 In functional programming, a [monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)) is a design pattern that allows structuring programs generically while automating away boilerplate code needed by the program logic.
 
@@ -7,7 +7,13 @@ to have already used or will eventually end up using monads without even knowing
 is my attempt at understanding monads by writing them, and I decided to use TypeScript because it forces me to
 build monads from "scratch", but with support for strong typing.
 
-### `Maybe`
+### Installation
+
+```
+npm i monads-typescript
+```
+
+### `Maybe` Monad
 The first monad, the `Maybe` monad, is based on Scala's
 [`Option`](https://www.scala-lang.org/api/current/scala/Option.html) type. It's very useful when you want
 to encapsulate computation on values that might be `null` or `undefined`.
@@ -57,7 +63,7 @@ const greetUser = (userId: number) => {
 As you can see, using the `Maybe` monad abstracts away a lot of boilerplate, giving you a flat, composable
 interface to work with that's much more readable.
 
-### `Either` 
+### `Either` Monad
 Similarly, the `Either` monad is based on Scala's
 [`Either`](https://www.scala-lang.org/api/current/scala/util/Either.html) type.
 
