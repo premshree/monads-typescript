@@ -13,6 +13,16 @@ build monads from "scratch", but with support for strong typing.
 npm i monads-typescript
 ```
 
+### Usage
+
+Import the appropriate static methods from the library like so:
+
+```ts
+import { left, right } from 'monads-typescript';
+import { maybe } from 'monads-typescript';
+...
+```
+
 ### `Maybe` Monad
 The first monad, the `Maybe` monad, is based on Scala's
 [`Option`](https://www.scala-lang.org/api/current/scala/Option.html) type. It's very useful when you want
